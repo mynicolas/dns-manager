@@ -31,7 +31,7 @@ license that can be found in the LICENSE file.
 <body unresolved>
 
   <div id="animate-me" hidden></div>
-
+<!-- 
   <select id="sel" onchange="setup();">
     <option value="core-transition-fade" selected>core-transition-fade</option>
     <option value="core-transition-center">core-transition-center</option>
@@ -39,7 +39,7 @@ license that can be found in the LICENSE file.
     <option value="core-transition-bottom">core-transition-bottom</option>
     <option value="core-transition-left">core-transition-left</option>
     <option value="core-transition-right">core-transition-right</option>
-  </select>
+  </select> -->
 
   <button onclick="stuff();">toggle</button>
 
@@ -52,6 +52,7 @@ license that can be found in the LICENSE file.
     });
 
     var meta;
+    var value = "core-transition-center";
     var transition;
     var state = {
       opened: false
@@ -72,7 +73,6 @@ license that can be found in the LICENSE file.
         transition.teardown(target);
       }
 
-      var value = document.getElementById('sel').selectedOptions[0].value;
       transition = getMeta().byId(value);
       transition.setup(target);
     }

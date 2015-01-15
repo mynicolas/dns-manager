@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 html /deep/ core-menu {
   display: block;
-  margin: 12px;
+  margin: 5px;
 }
 
 polyfill-next-selector { content: 'core-menu > core-item'; }
