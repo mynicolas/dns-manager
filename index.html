@@ -2,21 +2,51 @@
 <html lang="en">
 <head>
 	<title>dns manager system</title>
-	<meta charset="UTF-8" name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <link rel="import" href="components/polymer/polymer.html">
-  <link rel="import" href="components/polymer/layout.html">
-  <link rel="import" href="components/paper-ripple/paper-ripple.html">
-  <link rel="import" href="components/core-header-panel/core-header-panel.html">
-  <link rel="import" href="components/core-icons/core-icons.html">
-  <link rel="import" href="components/core-menu/core-menu.html">
-  <link rel="import" href="components/core-submenu/core-submenu.html">
-  <link rel="import" href="components/paper-dialog/paper-dialog.html">
-  <link rel="import" href="components/paper-dialog-transition/paper-dialog-transition.html">
-  <link rel="import" href="components/paper-shadow/paper-shadow.html">
-  <link rel="import" href="components/paper-item/paper-item.html">
-  <link rel="import" href="components/paper-icon-button/paper-icon-button.html">
-  <link rel="import" href="components/paper-button/paper-button.html">
-  <style shim-shadowdom>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"></meta>
+	<meta content="yes" name="mobile-web-app-capable"></meta>
+	<meta content="yes" name="apple-mobile-web-app-capable"></meta>
+	<link href="components/webcomponentsjs/webcomponents.js" rel="import"/>
+  <link href="components/polymer/polymer.js" rel="import"/>
+  <link href="components/polymer/polymer.html" rel="import"/>
+  <link href="components/polymer/layout.html" rel="import"/>
+  <link href="components/paper-ripple/paper-ripple.html" rel="import"/>
+  <link href="components/core-header-panel/core-header-panel.html" rel="import"/>
+  <link href="components/core-icons/core-icons.html" rel="import"/>
+  <link href="components/core-menu/core-menu.html" rel="import"/>
+  <link href="components/core-submenu/core-submenu.html" rel="import"/>
+  <link href="components/paper-dialog/paper-dialog.html" rel="import"/>
+  <link href="components/paper-dialog-transition/paper-dialog-transition.html" rel="import"/>
+  <link href="components/paper-shadow/paper-shadow.html" rel="import"/>
+  <link href="components/paper-item/paper-item.html" rel="import"/>
+  <link href="components/paper-icon-button/paper-icon-button.html" rel="import"/>
+  <link href="components/paper-button/paper-button.html" rel="import"/>  
+
+	<script>
+		if(!("import" in document.createElement("link"))) {
+			var Platform = {
+				flags: {
+					shadow: true
+				}
+			}
+		}
+	</script>
+	<style>
+		template {
+			display: none !important;
+		}
+	</style>
+	<style>
+		body {
+			transition: opacity: ease-in 0.2s;
+		}
+
+		body[unresolved] {
+			opacity: 0;
+			display: block;
+			overflow: hidden;
+		}
+	</style>
+  <style shim-shadowdom-css="">
     body {
       font-family: sans-serif;
       margin: 0;
@@ -91,9 +121,9 @@
     	color: red;
     }
 		
-		#dns-card {
-			width: 100%;
-		}
+	#dns-card {
+		width: 100%;
+	}
 
     #dns-all {
     	overflow-y: auto;
@@ -104,7 +134,7 @@
     	background: linear-gradient(#C1D1E8, #fff);
     }
 
-		@media (min-width: 500px) {
+	@media (min-width: 720px) {
 	    #container {
 	    	width: 100%;
 	    	padding: 100px 215px 0 5px;
@@ -130,7 +160,7 @@
 	    	overflow-y: auto;
 	    	overflow-x: auto;
 	    }
-		}
+	}
 
   </style>
   <script>
@@ -174,14 +204,14 @@
     }
   </script>
 </head>
-<body unresolved>
+<body unresolved touch-action="auto">
 	<core-header-panel>
 		<div class="core-header" style="text-align: center">DNS Manager System</div>
 		<div id="container">
 			<div class="card paper-shadow-top-z-5">
 				<div class="card-inner paper-shadow-bottom-z-5" vertical center layout>
 					<div flex one></div>
-					<paper-item id="all-ns" flex one onclick="stuff();"><label vertical center layout>all</label></paper-item>
+					<paper-item id="all-ns" flex one><paper-button class="dns-button" onclick="stuff()">all</paper-button></paper-item>
 					<div flex one></div>
 					<paper-item id="add-ns" flex one><label vertical center layout>NS</label></paper-item>
 					<div flex one></div>
@@ -206,26 +236,55 @@
 			<div id="dns-card">
 				<div class="paper-shadow-top-z-1">
 					<div id="dns-all" class="paper-shadow-bottom-z-5">
-						<core-item class="dns-all-header" horizontal layout>
+						<core-item class="dns-all-title" horizontal layout>
 							<div flex>DNS解析记录 目前状态</div>
 							<div id="dns-status" flex>开启</div>
-							<paper-icon-button raiseButton label="点击暂停解析" flex></paper-icon-button>
+							<paper-button raiseButtonv flex>点击暂停解析</paper-button>
 						</core-item>
-						<core-item class="dns-item">
-							<div class="item-header">域名(NS)(最多20条)</div>
-
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">域名(NS)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
 						</core-item>
-						<core-item class="dns-item">
-							<div class="item-header">主机名(A)(最多20条)</div>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">主机名(A)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
 						</core-item>
-						<core-item class="dns-item">
-							<div class="item-header">别名(CNAME)(最多20条)</div>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">别名(CNAME)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
 						</core-item>
-						<core-item class="dns-item">
-							<div class="item-header">邮件交换记录(MX)(最多20条)</div>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">邮件交换记录(MX)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
 						</core-item>
-						<core-item class="dns-item">
-							<div class="item-header">文本记录(TXT)(最多20条)</div>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">文本记录(TXT)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
 						</core-item>
 					</div>
 				</div>
