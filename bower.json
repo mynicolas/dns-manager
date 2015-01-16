@@ -1,0 +1,25 @@
+{
+  "name": "dns-manager",
+  "version": "0.0.0",
+  "homepage": "index.html",
+  "authors": [
+    "company <nicolas.lshuang@gmail.com>"
+  ],
+  "main": "index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.2",
+    "core-elements": "Polymer/core-elements#~0.5.2",
+    "polymer-elements": "Polymer/polymer-elements#~0.3.0"
+  }
+}

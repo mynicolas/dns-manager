@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>dns manager system</title>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"></meta>
+	<meta content="yes" name="mobile-web-app-capable"></meta>
+	<meta content="yes" name="apple-mobile-web-app-capable"></meta>
+	<script src="components/webcomponentsjs/webcomponents.js"></script>
+	<link rel="import" href="components/font-roboto/roboto.html">
+  <link href="components/polymer/polymer.html" rel="import"/>
+  <link href="components/polymer/layout.html" rel="import"/>
+  <link href="components/paper-ripple/paper-ripple.html" rel="import"></link>
+  <link href="components/core-header-panel/core-header-panel.html" rel="import"/>
+  <link href="components/core-icons/core-icons.html" rel="import"/>
+  <link href="components/core-menu/core-menu.html" rel="import"/>
+  <link href="components/core-submenu/core-submenu.html" rel="import"/>
+  <link href="components/paper-dialog/paper-dialog.html" rel="import"/>
+  <link href="components/paper-dialog-transition/paper-dialog-transition.html" rel="import"/>
+  <link href="components/paper-shadow/paper-shadow.html" rel="import"/>
+  <link href="components/paper-item/paper-item.html" rel="import"/>
+  <link href="components/paper-icon-button/paper-icon-button.html" rel="import"/>
+  <link href="components/paper-button/paper-button.html" rel="import"/>  
+
+	<script>
+		if(!("import" in document.createElement("link"))) {
+			var Platform = {
+				flags: {
+					shadow: true
+				}
+			}
+		}
+	</script>
+	<style>
+		template {
+			display: none !important;
+		}
+	</style>
+	<style>
+		body {
+			transition: opacity: ease-in 0.2s;
+		}
+
+		body[unresolved] {
+			opacity: 0;
+			display: block;
+			overflow: hidden;
+		}
+	</style>
+  <style shim-shadowdom-css="">
+    body {
+      font-family: sans-serif;
+      margin: 0;
+    }
+
+    core-header-panel {
+	  	width: 100%;
+	    height: 100%;
+	    overflow: auto;
+	    position: absolute;
+	    -webkit-overflow-scrolling: touch; 
+    }
+    
+    core-header-panel[mode=cover]::shadow #mainContainer {
+      left: 70px;
+    }
+
+    .core-header {
+      height: 60px;
+      line-height: 60px;
+      font-size: 18px;
+      padding: 0 10px;
+      background-color: #448FFF;
+      color: #FFF;
+      transition: height 0.2s;
+    }
+
+    #container {
+    	width: 100%;
+    	padding: 15px 215px 0 5px;
+      background: linear-gradient(#C1D1E8, #fff);
+    }
+
+		.card {
+			background: white;
+			margin-right: 10px;
+			height: 430px;
+			position: relative;
+		}
+
+		.card-inner {
+			position: absolute;
+			left: 5px;
+			top: 5px;
+			right: 5px;
+			bottom: 5px;
+			overflow-x: auto;
+			overflow-y: auto;
+		}
+
+		paper-item {
+			width: 100px;
+			color: #fff;
+			background: #448FFF;
+		}
+
+		label {
+			width: 100%;
+			height: 50%;
+			cursor: pointer;
+		}
+
+    #animate-me {
+      background: linear-gradient(#C1D1E8, #fff);
+      position: fixed;
+      top: 60px;
+      width: 100%;
+      height: 100%;
+    }
+
+    paper-icon-button[icon="close"] {
+    	color: red;
+    }
+		
+	#dns-card {
+		width: 100%;
+	}
+
+    #dns-all {
+    	overflow-y: auto;
+    	overflow-x: auto;
+    }
+
+    .dns-item {
+    	background: linear-gradient(#C1D1E8, #fff);
+    }
+
+	@media (min-width: 720px) {
+	    #container {
+	    	width: 100%;
+	    	padding: 100px 215px 0 5px;
+	      background: linear-gradient(#C1D1E8, #fff);
+	    }
+
+			.card {
+				background: white;
+				margin-right: 10px;
+				height: 500px;
+				position: relative;
+			}
+
+			#animate-me {
+	      background: linear-gradient(#C1D1E8, #fff);
+	      position: fixed;
+	      top: 60px;
+	      width: 80%;
+	      height: 80%;
+	      margin-left: 10%;
+			}
+	    #dns-all {
+	    	overflow-y: auto;
+	    	overflow-x: auto;
+	    }
+	}
+
+  </style>
+  <script>
+
+    document.addEventListener('polymer-ready', function() {
+      // initial setup
+      setup();
+      document.getElementById('animate-me').removeAttribute('hidden');
+    });
+
+    var meta;
+    var value = "core-transition-center";
+    var transition;
+    var state = {
+      opened: false
+    }
+
+    function getMeta() {
+      if (!meta) {
+        meta = document.createElement('core-meta');
+        meta.type = 'transition';
+      }
+      return meta;
+    }
+
+    function setup() {
+      var target = document.getElementById('animate-me');
+
+      if (transition) {
+        transition.teardown(target);
+      }
+
+      transition = getMeta().byId(value);
+      transition.setup(target);
+    }
+
+    function stuff() {
+      var target = document.getElementById('animate-me');
+      state.opened = !state.opened;
+      transition.go(target, state);
+    }
+  </script>
+</head>
+<body unresolved touch-action="auto">
+	<core-header-panel>
+		<div class="core-header" style="text-align: center">DNS Manager System</div>
+		<div id="container">
+			<div class="card paper-shadow-top-z-5">
+				<div class="card-inner paper-shadow-bottom-z-5" vertical center layout>
+					<div flex one></div>
+					<paper-item id="all-ns" flex one><paper-button class="dns-button" onclick="stuff()">all</paper-button></paper-item>
+					<div flex one></div>
+					<paper-item id="add-ns" flex one><label vertical center layout>NS</label></paper-item>
+					<div flex one></div>
+					<paper-item id="add-a" flex one><label vertical center layout>A</label></paper-item>
+					<div flex one></div>
+					<paper-item id="add-cname" flex one><label vertical center layout>CNAME</label></paper-item>
+					<div flex one></div>
+					<paper-item id="add-mx" flex one><label vertical center layout>MX</label></paper-item>
+					<div flex one></div>
+					<paper-item id="add-txt" flex one><label vertical center layout>TXT</label></paper-item>
+					<div flex one></div>
+				</div>
+			</div>
+		</div>
+	</core-header-panel>
+	<div id="animate-me" class="card paper-shadow-top-z-5" hidden>
+		<div class="card-inner paper-shadow-bottom-z-5" vertical layout>
+			<div horizontal layout> 
+				<div flex></div>
+				<div onclick="stuff();"><paper-icon-button raiseButton icon="close"></paper-icon-button></div>
+			</div>
+			<div id="dns-card">
+				<div class="paper-shadow-top-z-1">
+					<div id="dns-all" class="paper-shadow-bottom-z-5">
+						<core-item class="dns-all-title" horizontal layout>
+							<div flex>DNS解析记录 目前状态</div>
+							<div id="dns-status" flex>开启</div>
+							<paper-button raiseButtonv flex>点击暂停解析</paper-button>
+						</core-item>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">域名(NS)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
+						</core-item>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">主机名(A)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
+						</core-item>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">别名(CNAME)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
+						</core-item>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">邮件交换记录(MX)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
+						</core-item>
+						<core-item class="dns-item" vertical layout>
+							<div class="item-title">文本记录(TXT)(最多20条)</div>
+							<div class="dns-header" horizontal around-justified layout style="width: 100%">
+								<core-item class="dns-header-0">域名</core-item>
+								<core-item class="dns-header-1">域名服务器</core-item>
+								<core-item class="dns-header-2">TTL</core-item>
+								<core-item class="dns-header-3">操作</core-item>
+							</div>
+						</core-item>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

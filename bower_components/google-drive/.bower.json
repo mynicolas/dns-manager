@@ -1,0 +1,42 @@
+{
+  "name": "google-drive",
+  "version": "0.1.1",
+  "homepage": "http://googlewebcomponents.github.io/google-drive",
+  "description": "Google Drive Polymer element",
+  "main": "google-drive.html",
+  "authors": [
+    "Addy Osmani"
+  ],
+  "license": "Apache-2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "../"
+  ],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "drive",
+    "upload",
+    "file",
+    "google"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.4.1",
+    "google-signin": "GoogleWebComponents/google-signin#~0.1.0",
+    "cors-upload-sample": "googledrive/cors-upload-sample#master"
+  },
+  "_release": "0.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.1",
+    "commit": "f136a36379031a364240975d436fd71ee32f73ba"
+  },
+  "_source": "git://github.com/GoogleWebComponents/google-drive.git",
+  "_target": "*",
+  "_originalSource": "GoogleWebComponents/google-drive"
+}

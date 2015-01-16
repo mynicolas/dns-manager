@@ -1,0 +1,27 @@
+{
+  "name": "google-web-components",
+  "private": true,
+  "dependencies": {
+    "google-hangout-button": "GoogleWebComponents/google-hangout-button",
+    "google-gcloud": "GoogleWebComponents/google-gcloud",
+    "google-signin": "GoogleWebComponents/google-signin",
+    "google-sheets": "GoogleWebComponents/google-sheets",
+    "google-calendar": "GoogleWebComponents/google-calendar",
+    "google-chart": "GoogleWebComponents/google-chart",
+    "google-url-shortener": "GoogleWebComponents/google-url-shortener",
+    "google-streetview-pano": "GoogleWebComponents/google-streetview-pano",
+    "google-drive": "GoogleWebComponents/google-drive",
+    "google-youtube": "GoogleWebComponents/google-youtube"
+  },
+  "homepage": "https://github.com/PolymerLabs/google-web-components",
+  "_release": "192f02655a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "192f02655a609ecc5e581cdfcb3a79589f34f9df"
+  },
+  "_source": "git://github.com/PolymerLabs/google-web-components.git",
+  "_target": "*",
+  "_originalSource": "PolymerLabs/google-web-components",
+  "_direct": true
+}
